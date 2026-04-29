@@ -1,0 +1,228 @@
+:root {
+  --color-crema: #f7f1e8;
+  --color-beige: #d8c3a5;
+  --color-marron: #8b6b4a;
+  --color-terracota: #c98c6b;
+  --color-verde-salvia: #a3b18a;
+  --color-gris-calido: #b7ada3;
+  --color-nude: #e8cfc4;
+}
+
+body {
+  font-family: Georgia, serif;
+  background-color: var(--color-crema);
+  color: var(--color-marron);
+  margin: 0;
+  padding: 0;
+}
+
+
+h1,
+h2,
+h3 {
+  color: var(--color-marron);
+}
+
+
+h1 {
+  margin-top: 0;
+}
+
+
+
+header {
+  padding: 24px 40px;
+  background-color: var(--color-beige);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+h1 {
+  margin: 0;
+}
+
+
+nav a {
+  color: var(--color-marron);
+  text-decoration: none;
+  margin-right: 18px;
+  font-size: 16px;
+}
+
+nav a:hover {
+  color: var(--color-terracota);
+}
+
+
+
+section {
+  padding: 60px 40px;
+}
+
+#inicio {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 80px;
+  border-radius: 24px;
+  background-image: linear-gradient(rgba(35, 25, 20, 0.45), rgba(35, 25, 20, 0.45)),
+    url("img/vela-hero.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-contenido {
+  max-width: 650px;
+}
+
+.hero-contenido h2 {
+  font-size: 64px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  color: #f7f1e8;
+}
+
+.hero-contenido p {
+  font-size: 22px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  color: #f7f1e8;
+}
+
+.hero-contenido a {
+  display: inline-block;
+  background-color: #c98c6b;
+  color: #f7f1e8;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.hero-contenido a:hover {
+  background-color: #8b6b4a;
+}
+
+
+
+#inicio h2 {
+  font-size: 48px;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  line-height: 1.2;
+}
+
+
+#inicio p {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+
+#inicio a {
+  display: inline-block;
+  background-color: #b65a2b;
+  color: #f3eadf;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#inicio a:hover {
+  background-color: #944820;
+}
+
+
+#productos {
+  background-color: #efe4d6;
+  padding: 48px;
+  border-radius: 24px;
+}
+
+.producto {
+  background-color: #fffaf4;
+  padding: 28px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(139, 107, 74, 0.08);
+}
+
+.producto h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #8b6b4a;
+}
+
+.producto p {
+  margin-bottom: 12px;
+  line-height: 1.7;
+  color: #6f5842;
+}
+
+.producto button {
+  background-color: #c98c6b;
+  color: #f7f1e8;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.producto button:hover {
+  background-color: #8b6b4a;
+}
+
+.lista-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.descripcion {
+  margin-bottom: 16px;
+}
+
+.producto-footer {
+  margin-top: auto;
+}
+
+.precio {
+  font-size: 22px;
+  font-weight: bold;
+  color: #c98c6b;
+  margin-bottom: 16px;
+}
+
+#nosotros,
+#contacto,
+#carrito {
+  background-color: #f7f1e8;
+  padding: 48px;
+  border-radius: 24px;
+}
+
+
+#nosotros p,
+#contacto p,
+#carrito p {
+  max-width: 700px;
+  line-height: 1.7;
+}
+
+
+
+

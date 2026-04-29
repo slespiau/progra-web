@@ -1,0 +1,69 @@
+Nombre del proyecto: Oliberta
+
+Descripcion:
+Oliberta es una tienda web de velas artesanales de soja, decorativas y aromaticas.
+La marca busca transmitir calidez, paz, armonia y confort.
+Los productos estan pensados para decoracion, regalos, hogar y bienestar.
+
+Objetivo de la pagina:
+Mostrar los productos, permitir ver su precio y descripcion, y agregarlos a un carrito.
+
+Publico objetivo:
+Personas que buscan decorar espacios, hacer regalos o generar una sensacion de calma y bienestar en el hogar.
+
+Estilo visual:
+Elegante, calido y armonioso.
+
+Colores principales:
+Verde oscuro, rosa apagado, bordo o rojo oscuro, y algun azul suave u oscuro.
+
+
+Cliente:
+Es la parte visual de la web que la persona usuaria ve e interactua en el navegador.
+En Oliberta, incluye el inicio, nosotros, productos, contacto, carrito, botones, textos, colores e imagenes.
+
+Servidor:
+Es la parte interna que procesa informacion y maneja datos.
+En Oliberta, podria encargarse de productos, precios, carrito, pedidos, usuarios y base de datos.
+
+Full stack:
+El proyecto Oliberta sera full stack porque combinara la parte visual del cliente con la logica del servidor y la persistencia de datos.
+
+
+Estructura inicial de Oliberta
+
+1. Inicio
+Presentacion de la marca y propuesta principal.
+
+2. Nosotros
+Historia o identidad de la marca, enfocada en calidez, armonia y bienestar.
+
+3. Productos
+Catalogo de velas con nombre, descripcion, precio y boton para agregar al carrito.
+
+4. Contacto
+Seccion para que la persona usuaria pueda comunicarse con la marca.
+
+5. Carrito
+Espacio donde se veran los productos seleccionados para compra.
+
+
+
+
+Contenido inicial de la home de Oliberta
+
+Titulo principal:
+Oliberta
+
+Mensaje principal:
+Velas artesanales que llenan tus espacios de calidez, aroma y armonia.
+
+Descripcion:
+Descubri una coleccion de velas de soja pensadas para decorar, regalar y crear momentos de paz y bienestar.
+
+Boton principal:
+Ver productos
+
+Texto institucional:
+En Oliberta creemos en los pequeños detalles que transforman un ambiente.
+Nuestras velas artesanales combinan diseño, aroma y calidez para acompanar momentos especiales, regalar bienestar y decorar con estilo.
