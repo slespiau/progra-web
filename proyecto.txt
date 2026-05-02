@@ -67,3 +67,46 @@ Ver productos
 Texto institucional:
 En Oliberta creemos en los pequeños detalles que transforman un ambiente.
 Nuestras velas artesanales combinan diseño, aroma y calidez para acompanar momentos especiales, regalar bienestar y decorar con estilo.
+
+
+
+lista productos:
+- vela valle:
+        descripcion: 
+        precio: $17.000
+- vela relax:
+        descripcion:
+        precio: $18.000
+- vela naturaleza:
+        descripcion:
+        precio: $28.000
+- vela bosque:
+        descripcion:
+        precio: $24.000
+- coleccion esencia:
+        descripcion:
+        precio: $16.000 cada una o set x3 a $42.000
+- vela terra:
+        descripcion:
+        precio: $20.000
+
+para cada producto que tenemos: me armas una descripcion porfa. inventate algun aroma para cada una.
+lista productos:
+- vela valle:
+        descripcion: 
+        precio: $17.000
+- vela relax:
+        descripcion:
+        precio: $18.000
+- vela naturaleza:
+        descripcion:
+        precio: $28.000
+- vela bosque:
+        descripcion:
+        precio: $24.000
+- coleccion esencia:
+        descripcion:
+        precio: $16.000 cada una o set x3 a $42.000
+- vela terra:
+        descripcion:
+        precio: $20.000
