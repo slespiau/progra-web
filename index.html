@@ -75,21 +75,21 @@
         </div>
       
         <div class="lista-productos">
-          <article class="producto">
+          <article class="producto" data-nombre="Vela Valle" data-precio="17000">
             <img src="img/vela-valle.png" alt="Vela Valle en recipiente verde de forma orgánica" />
             <h3>Vela Valle</h3>
             <p class="descripcion">
-              Vela artesanal en recipiente verde de forma orgánica, inspirada en la
+              Vela artesanal en recipiente verde, inspirada en la
               calma de la naturaleza. Su aroma suave a eucalipto y té blanco acompaña
               momentos de descanso y frescura en el hogar.
             </p>
             <div class="producto-footer">
               <p class="precio">$17.000</p>
-              <button>Agregar al carrito</button>
+              <button class="boton-agregar">Agregar al carrito</button>
             </div>
           </article>
       
-          <article class="producto">
+          <article class="producto" data-nombre="Vela Relax" data-precio="18000">
             <img src="img/vela-relax.png" alt="Vela Relax en envase verde con tapa" />
             <h3>Vela Relax</h3>
             <p class="descripcion">
@@ -99,11 +99,11 @@
             </p>
             <div class="producto-footer">
               <p class="precio">$18.000</p>
-              <button>Agregar al carrito</button>
+              <button class="boton-agregar">Agregar al carrito</button>
             </div>
           </article>
       
-          <article class="producto">
+          <article class="producto" data-nombre="Vela Naturaleza" data-precio="28000">
             <img src="img/vela-naturaleza.png" alt="Vela Naturaleza en cuenco de madera con detalles inspirados en suculentas y flores" />
             <h3>Vela Naturaleza</h3>
             <p class="descripcion">
@@ -113,11 +113,11 @@
             </p>
             <div class="producto-footer">
               <p class="precio">$28.000</p>
-              <button>Agregar al carrito</button>
+              <button class="boton-agregar">Agregar al carrito</button>
             </div>
           </article>
       
-          <article class="producto">
+          <article class="producto" data-nombre="Vela Bosque" data-precio="24000">
             <img src="img/vela-bosque.png" alt="Vela Bosque en cuenco de madera con detalles florales" />
             <h3>Vela Bosque</h3>
             <p class="descripcion">
@@ -127,11 +127,11 @@
             </p>
             <div class="producto-footer">
               <p class="precio">$24.000</p>
-              <button>Agregar al carrito</button>
+              <button class="boton-agregar">Agregar al carrito</button>
             </div>
           </article>
       
-          <article class="producto">
+          <article class="producto" data-nombre="Colección Esencia" data-precio="16000">
             <img src="img/coleccion-esencia.png" alt="Colección Esencia de velas en envase de vidrio con frases inspiradoras" />
             <h3>Colección Esencia</h3>
             <p class="descripcion">
@@ -140,12 +140,12 @@
               vainilla cálida, flor de algodón y coco suave.
             </p>
             <div class="producto-footer">
-              <p class="precio">$16.000 c/u o set x3 $42.000</p>
-              <button>Agregar al carrito</button>
+              <p class="precio">$16.000 c/u</p>
+              <button class="boton-agregar">Agregar al carrito</button>
             </div>
           </article>
       
-          <article class="producto">
+          <article class="producto" data-nombre="Vela Terra" data-precio="20000">
             <img src="img/vela-terra.png" alt="Vela Terra en recipiente estilo piedra de diseño minimalista" />
             <h3>Vela Terra</h3>
             <p class="descripcion">
@@ -155,7 +155,7 @@
             </p>
             <div class="producto-footer">
               <p class="precio">$20.000</p>
-              <button>Agregar al carrito</button>
+              <button class="boton-agregar">Agregar al carrito</button>
             </div>
           </article>
         </div>
@@ -168,7 +168,7 @@
           <h2>Contacto</h2>
           <p>
             Si querés comunicarte con Oliberta, hacer un pedido especial o consultar
-            por regalos, podés escribirnos y con gusto te ayudamos.
+            por regalos, podés escribirnos y con gusto te ayudamos!
           </p>
           <p class="contacto-dato">Email: contacto@oliberta.com</p>
           <p class="contacto-dato">Instagram: @oli_berta.tienda</p>
@@ -185,15 +185,24 @@
           </p>
       
           <div class="carrito-box">
-            <p class="carrito-vacio">Todavía no agregaste productos al carrito.</p>
+            <p id="carrito-vacio" class="carrito-vacio">
+              Todavía no agregaste productos al carrito.
+            </p>
+      
+            <div id="lista-carrito"></div>
       
             <div class="carrito-resumen">
-              <p>Total: <span>$0</span></p>
-              <button>Finalizar compra</button>
+              <p>Total: <span id="total-carrito">$0</span></p>
+
+              <div class="carrito-botones">
+                <button id="boton-vaciar">Vaciar carrito</button>
+                <button>Finalizar compra</button>
+              </div>
             </div>
           </div>
         </div>
       </section>
+      
       
     </main>
 
