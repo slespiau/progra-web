@@ -2,16 +2,25 @@ export default function ProductoCard({
     nombre,
     descripcion,
     precio,
+    imagen,
     onAgregar,
   }) {
     return (
-      <article>
+      <article className="producto-card">
+        <img src={imagen} alt={nombre} className="producto-imagen" />
+  
         <h3>{nombre}</h3>
-        <p>{descripcion}</p>
-        <p>${precio.toLocaleString("es-AR")}</p>
-        <button onClick={onAgregar}>Agregar al carrito</button>
+        <p className="producto-descripcion">{descripcion}</p>
+  
+        <div className="producto-footer">
+          <p className="producto-precio">${precio.toLocaleString("es-AR")}</p>
+          <button className="producto-boton" onClick={onAgregar}>
+            Agregar al carrito
+          </button>
+        </div>
       </article>
     );
   }
+  
   
   
