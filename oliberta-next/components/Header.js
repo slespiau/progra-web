@@ -1,18 +1,21 @@
+import Link from "next/link";
+
 export default function Header() {
-    return (
-      <header className="header">
-        <div className="marca">
-          <h1>OLIBERTA</h1>
-        </div>
-  
-        <nav className="nav">
-          <a href="#inicio">Inicio</a>
-          <a href="#nosotros">Nosotros</a>
-          <a href="#productos">Productos</a>
-          <a href="#contacto">Contacto</a>
-          <a href="#carrito">Carrito</a>
-        </nav>
-      </header>
-    );
-  }
+  return (
+    <header className="header">
+      <div className="marca">
+        <h1>OLIBERTA</h1>
+      </div>
+
+      <nav className="nav">
+        <Link href="/">Inicio</Link>
+        <Link href="/nosotros">Nosotros</Link>
+        <Link href="/productos">Productos</Link>
+        <Link href="/contacto">Contacto</Link>
+        <Link href="/carrito">Carrito</Link>
+      </nav>
+    </header>
+  );
+}
+
   

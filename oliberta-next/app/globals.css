@@ -84,6 +84,8 @@ main {
 }
 
 .hero-boton {
+  display: inline-block;
+  text-decoration: none;
   background-color: #c98c6b;
   color: #f7f1e8;
   border: none;

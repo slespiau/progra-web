@@ -1,6 +1,11 @@
-import ProductoCard from "../components/ProductoCard";
+"use client";
 
-export default function Productos({ productos, onAgregar }) {
+import ProductoCard from "../components/ProductoCard";
+import { useCart } from "../context/CartContext";
+
+export default function Productos({ productos }) {
+  const { agregarAlCarrito } = useCart();
+
   return (
     <section id="productos" className="productos">
       <div className="productos-encabezado">
@@ -19,10 +24,12 @@ export default function Productos({ productos, onAgregar }) {
             descripcion={producto.descripcion}
             precio={producto.precio}
             imagen={producto.imagen}
-            onAgregar={() => onAgregar(producto)}
+            onAgregar={() => agregarAlCarrito(producto)}
           />
         ))}
       </div>
     </section>
   );
 }
+
+
