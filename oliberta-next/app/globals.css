@@ -427,3 +427,169 @@ main {
 .boton-finalizar:hover {
   background-color: #8b6b4a;
 }
+
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+  }
+
+  .marca h1 {
+    font-size: 40px;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav a {
+    margin-left: 0;
+    font-size: 15px;
+  }
+
+  .hero {
+    padding: 180px 24px 80px;
+    min-height: 100vh;
+  }
+
+  .hero-contenido h2 {
+    font-size: 46px;
+  }
+
+  .hero-contenido p {
+    font-size: 19px;
+  }
+
+  .nosotros,
+  .productos,
+  .contacto,
+  .carrito {
+    padding: 80px 24px;
+  }
+
+  .nosotros-contenido {
+    grid-template-columns: 1fr;
+  }
+
+  .nosotros-imagen img {
+    height: 380px;
+  }
+
+  .productos-encabezado h2,
+  .nosotros-texto h2,
+  .contacto-contenido h2,
+  .carrito-contenido h2 {
+    font-size: 42px;
+  }
+
+  .productos-encabezado p,
+  .nosotros-texto p,
+  .contacto-contenido p,
+  .carrito-intro {
+    font-size: 18px;
+  }
+
+  .lista-productos {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .carrito-resumen {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .carrito-botones {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 18px 16px;
+  }
+
+  .marca h1 {
+    font-size: 32px;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .hero {
+    padding: 200px 16px 60px;
+  }
+
+  .hero-contenido h2 {
+    font-size: 36px;
+  }
+
+  .hero-contenido p {
+    font-size: 17px;
+  }
+
+  .hero-boton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nosotros,
+  .productos,
+  .contacto,
+  .carrito {
+    padding: 70px 16px;
+  }
+
+  .nosotros-imagen img {
+    height: 300px;
+  }
+
+  .productos-encabezado h2,
+  .nosotros-texto h2,
+  .contacto-contenido h2,
+  .carrito-contenido h2 {
+    font-size: 34px;
+  }
+
+  .lista-productos {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-card {
+    min-height: auto;
+  }
+
+  .producto-imagen {
+    height: 220px;
+  }
+
+  .item-carrito {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .controles-cantidad {
+    flex-wrap: wrap;
+  }
+
+  .carrito-resumen p {
+    font-size: 24px;
+  }
+
+  .carrito-botones {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  #boton-vaciar,
+  .boton-finalizar {
+    width: 100%;
+  }
+}
