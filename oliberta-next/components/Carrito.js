@@ -1,32 +1,105 @@
 "use client";
 
-import { useCart } from "../context/CartContext";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
+import { useRouter } from "next/navigation";
 
 export default function Carrito() {
-  const {
-    carrito,
-    vaciarCarrito,
-    eliminarDelCarrito,
-    sumarUnidad,
-    restarUnidad,
-  } = useCart();
+  const [carrito, setCarrito] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  const total = carrito.reduce((acumulador, producto) => {
-    return acumulador + producto.precio;
-  }, 0);
+  async function getCarritoActual() {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const carritoAgrupado = {};
-
-  carrito.forEach((producto) => {
-    if (carritoAgrupado[producto.nombre]) {
-      carritoAgrupado[producto.nombre].cantidad += 1;
-    } else {
-      carritoAgrupado[producto.nombre] = {
-        precio: producto.precio,
-        cantidad: 1,
-      };
+    if (!user) {
+      router.push("/auth/login");
+      return;
     }
-  });
+
+    const { data, error } = await supabase
+      .from("carrito")
+      .select(`
+        id,
+        cantidad,
+        usuario_id,
+        producto_id,
+        productos (
+          id,
+          nombre,
+          precio,
+          imagen_url
+        )
+      `)
+      .eq("usuario_id", user.id);
+
+    if (error) {
+      console.error("Error al traer carrito:", error.message);
+      setCarrito([]);
+    } else {
+      setCarrito(data || []);
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    getCarritoActual();
+  }, []);
+
+  const sumarCantidad = async (item) => {
+    const { error } = await supabase
+      .from("carrito")
+      .update({ cantidad: item.cantidad + 1 })
+      .eq("id", item.id);
+
+    if (error) {
+      console.error("Error al sumar cantidad:", error.message);
+      return;
+    }
+
+    getCarritoActual();
+  };
+
+  const restarCantidad = async (item) => {
+    if (item.cantidad === 1) {
+      const { error } = await supabase.from("carrito").delete().eq("id", item.id);
+
+      if (error) {
+        console.error("Error al eliminar producto:", error.message);
+        return;
+      }
+    } else {
+      const { error } = await supabase
+        .from("carrito")
+        .update({ cantidad: item.cantidad - 1 })
+        .eq("id", item.id);
+
+      if (error) {
+        console.error("Error al restar cantidad:", error.message);
+        return;
+      }
+    }
+
+    getCarritoActual();
+  };
+
+  const eliminarProducto = async (item) => {
+    const { error } = await supabase.from("carrito").delete().eq("id", item.id);
+
+    if (error) {
+      console.error("Error al eliminar producto:", error.message);
+      return;
+    }
+
+    getCarritoActual();
+  };
+
+  const total = carrito.reduce((acumulador, item) => {
+    return acumulador + item.cantidad * item.productos.precio;
+  }, 0);
 
   return (
     <section id="carrito" className="carrito">
@@ -37,32 +110,34 @@ export default function Carrito() {
         </p>
 
         <div className="carrito-box">
-          {carrito.length === 0 ? (
+          {loading ? (
+            <p className="carrito-vacio">Cargando carrito...</p>
+          ) : carrito.length === 0 ? (
             <p className="carrito-vacio">
               Todavía no agregaste productos al carrito.
             </p>
           ) : (
-            Object.entries(carritoAgrupado).map(([nombre, producto]) => (
-              <div key={nombre} className="item-carrito">
+            carrito.map((item) => (
+              <div key={item.id} className="item-carrito">
                 <div className="item-carrito-info">
                   <p>
-                    {nombre} x{producto.cantidad}
+                    {item.productos.nombre} x{item.cantidad}
                   </p>
                   <p>
                     $
-                    {(producto.precio * producto.cantidad).toLocaleString(
+                    {(item.productos.precio * item.cantidad).toLocaleString(
                       "es-AR"
                     )}
                   </p>
                 </div>
 
                 <div className="controles-cantidad">
-                  <button onClick={() => restarUnidad(nombre)}>-</button>
-                  <span>{producto.cantidad}</span>
-                  <button onClick={() => sumarUnidad(nombre)}>+</button>
+                  <button onClick={() => restarCantidad(item)}>-</button>
+                  <span>{item.cantidad}</span>
+                  <button onClick={() => sumarCantidad(item)}>+</button>
                   <button
                     className="boton-eliminar"
-                    onClick={() => eliminarDelCarrito(nombre)}
+                    onClick={() => eliminarProducto(item)}
                   >
                     Eliminar
                   </button>
@@ -75,19 +150,9 @@ export default function Carrito() {
             <p>
               Total: <span>${total.toLocaleString("es-AR")}</span>
             </p>
-
-            <div className="carrito-botones">
-              <button id="boton-vaciar" onClick={vaciarCarrito}>
-                Vaciar carrito
-              </button>
-              <button className="boton-finalizar">Finalizar compra</button>
-            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-
-  

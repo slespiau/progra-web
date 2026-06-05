@@ -1,3 +1,4 @@
+import UserSession from "./UserSession";
 import Link from "next/link";
 
 export default function Header() {
@@ -14,6 +15,8 @@ export default function Header() {
         <Link href="/contacto">Contacto</Link>
         <Link href="/carrito">Carrito</Link>
       </nav>
+
+      <UserSession />
     </header>
   );
 }
