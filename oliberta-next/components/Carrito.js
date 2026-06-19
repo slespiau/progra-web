@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 export default function Carrito() {
   const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [procesando, setProcesando] = useState(false);
   const router = useRouter();
 
   async function getCarritoActual() {
@@ -97,6 +98,45 @@ export default function Carrito() {
     getCarritoActual();
   };
 
+  const handleComprar = async () => {
+    setProcesando(true);
+
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        router.push("/auth/login");
+        return;
+      }
+
+      const res = await fetch("/api/ordenes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      const result = await res.json();
+
+      if (!res.ok || !result.success) {
+        alert(result.error || "Error al crear la orden");
+        return;
+      }
+
+      alert("Compra realizada con éxito");
+      getCarritoActual();
+      router.push("/ordenes");
+    } catch (err) {
+      console.error("Error al crear orden:", err);
+      alert("Error al crear la orden");
+    } finally {
+      setProcesando(false);
+    }
+  };
+
   const total = carrito.reduce((acumulador, item) => {
     return acumulador + item.cantidad * item.productos.precio;
   }, 0);
@@ -120,9 +160,7 @@ export default function Carrito() {
             carrito.map((item) => (
               <div key={item.id} className="item-carrito">
                 <div className="item-carrito-info">
-                  <p>
-                    {item.productos.nombre} x{item.cantidad}
-                  </p>
+                  <p>{item.productos.nombre}</p>
                   <p>
                     $
                     {(item.productos.precio * item.cantidad).toLocaleString(
@@ -150,6 +188,18 @@ export default function Carrito() {
             <p>
               Total: <span>${total.toLocaleString("es-AR")}</span>
             </p>
+
+            {carrito.length > 0 && (
+              <div className="carrito-botones">
+                <button
+                  className="boton-finalizar"
+                  onClick={handleComprar}
+                  disabled={procesando}
+                >
+                  {procesando ? "Procesando..." : "Finalizar compra"}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

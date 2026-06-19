@@ -13,50 +13,31 @@ export default function AgregarAlCarrito({ producto }) {
 
     try {
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
+        data: { session },
+      } = await supabase.auth.getSession();
 
-      if (!user) {
+      if (!session) {
         router.push("/auth/login");
         return;
       }
 
-      const { data: existente, error: errorBusqueda } = await supabase
-        .from("carrito")
-        .select("id, cantidad")
-        .eq("usuario_id", user.id)
-        .eq("producto_id", producto.id)
-        .maybeSingle();
-
-      if (errorBusqueda) {
-        console.error("Error al buscar producto en carrito:", errorBusqueda.message);
-        alert("Error al agregar al carrito");
-        return;
-      }
-
-      if (existente) {
-        const { error: errorUpdate } = await supabase
-          .from("carrito")
-          .update({ cantidad: existente.cantidad + 1 })
-          .eq("id", existente.id);
-
-        if (errorUpdate) {
-          console.error("Error al actualizar carrito:", errorUpdate.message);
-          alert("Error al agregar al carrito");
-          return;
-        }
-      } else {
-        const { error: errorInsert } = await supabase.from("carrito").insert({
-          usuario_id: user.id,
+      const res = await fetch("/api/carrito", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
           producto_id: producto.id,
           cantidad: 1,
-        });
+        }),
+      });
 
-        if (errorInsert) {
-          console.error("Error al insertar en carrito:", errorInsert.message);
-          alert("Error al agregar al carrito");
-          return;
-        }
+      const result = await res.json();
+
+      if (!res.ok || !result.success) {
+        alert(result.error || "Error al agregar al carrito");
+        return;
       }
 
       alert("Producto agregado al carrito");

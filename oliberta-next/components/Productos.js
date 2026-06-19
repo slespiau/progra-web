@@ -1,29 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ProductoCard from "../components/ProductoCard";
-import { supabase } from "../lib/supabase";
-import { useCart } from "../context/CartContext";
+import ProductoCard from "./ProductoCard";
 
 export default function Productos() {
-  const { agregarAlCarrito } = useCart();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
 
   useEffect(() => {
     async function getProductos() {
-      const { data, error } = await supabase.from("productos").select();
+      try {
+        const res = await fetch("/api/productos");
+        const result = await res.json();
 
-      if (error) {
-        console.error("Supabase error:", error.message, error.details, error.hint);
+        if (!res.ok || !result.success) {
+          console.error("Error al obtener productos:", result.error);
+          setProductos([]);
+          return;
+        }
+
+        setProductos(result.data || []);
+      } catch (err) {
+        console.error("Error al obtener productos:", err);
         setProductos([]);
-      } else {
-        setProductos(data || []);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     }
 
     getProductos();
@@ -58,5 +60,3 @@ export default function Productos() {
     </section>
   );
 }
-
-
