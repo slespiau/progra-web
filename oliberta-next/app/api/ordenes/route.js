@@ -47,7 +47,7 @@ export async function GET(request) {
 
     const { data, error } = await supabase
       .from("ordenes")
-      .select("id, total, estado, creado_en")
+      .select("id, total, estado, creado_en, metodo_pago, referencia_pago, pagado_en")
       .eq("usuario_id", user.id)
       .order("creado_en", { ascending: false });
 
@@ -87,7 +87,7 @@ export async function POST(request) {
     const { data: carritoItems, error: carritoError } = await supabase
       .from("carrito")
       .select(`
-        id,
+        producto_id,
         cantidad,
         producto:productos(id, nombre, precio, stock)
       `)
@@ -118,47 +118,36 @@ export async function POST(request) {
       return sum + item.producto.precio * item.cantidad;
     }, 0);
 
-    const { data: orden, error: ordenError } = await supabase
-      .from("ordenes")
-      .insert({
-        usuario_id: user.id,
-        total,
-        estado: "pendiente",
-      })
-      .select()
-      .single();
+    const items = carritoItems.map((item) => ({
+      producto_id: item.producto_id,
+      cantidad: item.cantidad,
+    }));
 
-    if (ordenError) {
+    const { data, error } = await supabase.rpc("crear_orden_completa", {
+      p_usuario_id: user.id,
+      p_items: items,
+      p_total: total,
+    });
+
+    if (error) {
       return errorResponse("Error al crear la orden", 500);
     }
 
-    for (const item of carritoItems) {
-      const nuevoStock = item.producto.stock - item.cantidad;
+    const resultado = data?.[0];
 
-      const { error: stockError } = await supabase
-        .from("productos")
-        .update({ stock: nuevoStock })
-        .eq("id", item.producto.id);
-
-      if (stockError) {
-        return errorResponse("Error al actualizar stock", 500);
-      }
-    }
-
-    const carritoIds = carritoItems.map((item) => item.id);
-
-    const { error: deleteError } = await supabase
-      .from("carrito")
-      .delete()
-      .in("id", carritoIds);
-
-    if (deleteError) {
-      return errorResponse("Error al vaciar carrito", 500);
+    if (!resultado?.success) {
+      return errorResponse(
+        resultado?.error_msg || "Error al crear la orden",
+        500
+      );
     }
 
     return Response.json({
       success: true,
-      data: orden,
+      data: {
+        orden_id: resultado.orden_id,
+        total,
+      },
     });
   } catch (err) {
     return errorResponse("Error al crear la orden", 500);

@@ -78,6 +78,12 @@ export default function Ordenes() {
                   Fecha:{" "}
                   {new Date(orden.creado_en).toLocaleDateString("es-AR")}
                 </p>
+                <Link
+                  href={`/checkout?orden=${orden.id}`}
+                  className="checkout-volver"
+                >
+                  Ir al checkout
+                </Link>
               </div>
             ))
           )}
