@@ -100,6 +100,12 @@ export default function Checkout() {
       }
 
       setPreferencia(result.data);
+
+      const pagoUrl = result.data.sandbox_init_point || result.data.init_point;
+
+      if (pagoUrl) {
+        window.location.href = pagoUrl;
+      }
     } catch (err) {
       setError("Error al preparar el pago");
     } finally {
@@ -152,10 +158,8 @@ export default function Checkout() {
               <div className="checkout-preferencia">
                 <h3>Preferencia preparada</h3>
                 <p>Orden: #{preferencia.orden_id}</p>
-                <p>Total: ${Number(preferencia.total).toLocaleString("es-AR")}</p>
                 <p>Email: {preferencia.payer_email}</p>
                 <p>Referencia externa: {preferencia.external_reference}</p>
-                <p>Ítems: {preferencia.items.length}</p>
               </div>
             )}
 

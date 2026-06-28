@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { client, Preference } from "../../../../lib/mercadopago";
 
 function errorResponse(error, status) {
   return Response.json(
@@ -52,6 +53,12 @@ export async function POST(request) {
       return errorResponse("Orden inválida", 400);
     }
 
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+
+    if (!appUrl) {
+      return errorResponse("Falta configurar NEXT_PUBLIC_APP_URL", 500);
+    }
+
     const { data: orden, error: ordenError } = await supabase
       .from("ordenes")
       .select("id, usuario_id, total, estado")
@@ -76,22 +83,46 @@ export async function POST(request) {
       return errorResponse("La orden no tiene ítems válidos", 400);
     }
 
+    const preference = new Preference(client);
+    
+    console.log("APP URL:", process.env.NEXT_PUBLIC_APP_URL);
+    const response = await preference.create({
+      body: {
+        items: items.map((item) => ({
+          id: String(item.producto_id),
+          title: item.nombre_producto,
+          description: `Cantidad: ${item.cantidad}`,
+          quantity: item.cantidad,
+          unit_price: Number(item.precio_unitario),
+          currency_id: "ARS",
+        })),
+        payer: {
+          email: user.email,
+        },
+        back_urls: {
+          success: `${appUrl}/pago-completado`,
+          failure: `${appUrl}/pago-fallido`,
+          pending: `${appUrl}/pago-pendiente`,
+        },
+        auto_return: "approved",
+        external_reference: String(orden.id),
+      },
+    });
+
     return Response.json({
       success: true,
       data: {
         orden_id: orden.id,
-        total: orden.total,
-        estado: orden.estado,
-        payer_email: user.email,
-        external_reference: String(orden.id),
-        items: items.map((item) => ({
-          title: item.nombre_producto,
-          quantity: item.cantidad,
-          unit_price: Number(item.precio_unitario),
-        })),
+        init_point: response.init_point,
+        sandbox_init_point: response.sandbox_init_point,
       },
     });
   } catch (err) {
-    return errorResponse("Error al crear preferencia de pago", 500);
+    console.error("Error al crear preferencia:", err);
+
+    return errorResponse(
+      err?.message || "Error al crear preferencia de pago",
+      err?.status || 500
+    );
   }
 }
