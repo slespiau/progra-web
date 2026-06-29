@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "../../../lib/supabase";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ export default function LoginPage() {
         setError(error.message);
       } else {
         router.push("/");
+        router.refresh();
       }
     } catch (err) {
       setError("Error al iniciar sesión");
@@ -37,8 +39,7 @@ export default function LoginPage() {
 
   return (
     <main className="auth-page">
-        <section className="auth-card">
-
+      <section className="auth-card">
         <h1>Iniciar sesión</h1>
 
         <form onSubmit={handleLogin}>
@@ -64,12 +65,23 @@ export default function LoginPage() {
             />
           </div>
 
-          {error && <p>{error}</p>}
+          {error && (
+            <p>
+              {error}. Si todavía no tenés cuenta,{" "}
+              <Link href="/auth/register">registrate acá</Link>.
+            </p>
+          )}
 
           <button type="submit" disabled={loading}>
             {loading ? "Ingresando..." : "Ingresar"}
           </button>
         </form>
+
+        {!error && (
+          <p>
+            ¿No tenés cuenta? <Link href="/auth/register">Registrate</Link>
+          </p>
+        )}
       </section>
     </main>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "../../../lib/supabase";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -37,6 +38,7 @@ export default function RegisterPage() {
           email,
           nombre,
           apellido,
+          rol: "cliente",
         });
 
         if (profileError) {
@@ -56,7 +58,7 @@ export default function RegisterPage() {
 
   return (
     <main className="auth-page">
-        <section className="auth-card">
+      <section className="auth-card">
         <h1>Registrarse</h1>
 
         <form onSubmit={handleRegister}>
@@ -110,6 +112,10 @@ export default function RegisterPage() {
             {loading ? "Registrando..." : "Crear cuenta"}
           </button>
         </form>
+
+        <p>
+          ¿Ya tenés cuenta? <Link href="/auth/login">Iniciá sesión</Link>
+        </p>
       </section>
     </main>
   );
