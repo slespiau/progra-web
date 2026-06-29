@@ -945,11 +945,6 @@ main {
   color: #8b6b4a;
 }
 
-.checkout-boton {
-  display: inline-block;
-  margin-top: 8px;
-  margin-bottom: 20px;
-}
 
 .checkout-preferencia {
   margin-top: 24px;
@@ -1006,12 +1001,9 @@ main {
   .checkout-box {
     padding: 24px 20px;
   }
-
-  .checkout-boton,
-  .checkout-boton .boton-finalizar {
-    width: 100%;
-  }
 }
+
+  
 
 .auth-page {
   min-height: 100vh;
@@ -1578,16 +1570,29 @@ main {
   text-decoration: none;
 }
 
+.checkout-acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.checkout-boton {
+  display: block;
+}
+
 .checkout-mp-boton {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
   width: 100%;
-  max-width: 360px;
+  min-width: 360px;
   border: none;
   padding: 16px 24px;
-  border-radius: 14px;
+  border-radius: 16px;
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
@@ -1610,13 +1615,48 @@ main {
 .checkout-mp-logo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 108px;
-  padding: 8px 12px;
+  gap: 10px;
+  padding: 8px 14px;
   border-radius: 999px;
   background-color: rgba(255, 255, 255, 0.16);
+}
+
+.checkout-mp-logo-circulo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #ffe600;
+  box-shadow: 10px 0 0 #ffe600;
+  position: relative;
+  margin-right: 6px;
+}
+
+.checkout-mp-logo-texto {
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.checkout-mp-boton-texto {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (max-width: 700px) {
+  .checkout-acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .checkout-mp-boton {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .checkout-volver {
+    width: 100%;
+  }
 }
