@@ -47,7 +47,20 @@ export async function GET(request) {
 
     const { data, error } = await supabase
       .from("ordenes")
-      .select("id, total, estado, creado_en, metodo_pago, referencia_pago, pagado_en")
+      .select(`
+        id,
+        total,
+        estado,
+        creado_en,
+        metodo_pago,
+        referencia_pago,
+        pagado_en,
+        items:orden_items(
+          nombre_producto,
+          cantidad,
+          subtotal
+        )
+      `)
       .eq("usuario_id", user.id)
       .order("creado_en", { ascending: false });
 

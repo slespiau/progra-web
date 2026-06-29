@@ -117,7 +117,7 @@ export default function Checkout() {
     return (
       <section className="checkout">
         <div className="checkout-contenido">
-          <p>Cargando checkout...</p>
+          <p className="checkout-loading">Cargando checkout...</p>
         </div>
       </section>
     );
@@ -134,7 +134,7 @@ export default function Checkout() {
         {error && <p className="checkout-error">{error}</p>}
 
         {orden && (
-          <div className="checkout-box">
+          <article className="checkout-box">
             <p>
               <strong>Orden #{orden.id}</strong>
             </p>
@@ -165,7 +165,7 @@ export default function Checkout() {
             <Link href="/ordenes" className="checkout-volver">
               Volver a mis órdenes
             </Link>
-          </div>
+          </article>
         )}
       </div>
     </section>

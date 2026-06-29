@@ -1,7 +1,5 @@
-import Tienda from "../components/Tienda";
+import Inicio from "../components/Inicio";
 
 export default function Home() {
-  return <Tienda />;
+  return <Inicio />;
 }
-
-

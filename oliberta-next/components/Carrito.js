@@ -158,7 +158,7 @@ export default function Carrito() {
             </p>
           ) : (
             carrito.map((item) => (
-              <div key={item.id} className="item-carrito">
+              <article key={item.id} className="item-carrito">
                 <div className="item-carrito-info">
                   <p>{item.productos.nombre}</p>
                   <p>
@@ -170,9 +170,19 @@ export default function Carrito() {
                 </div>
 
                 <div className="controles-cantidad">
-                  <button onClick={() => restarCantidad(item)}>-</button>
+                  <button
+                    aria-label="Restar cantidad"
+                    onClick={() => restarCantidad(item)}
+                  >
+                    -
+                  </button>
                   <span>{item.cantidad}</span>
-                  <button onClick={() => sumarCantidad(item)}>+</button>
+                  <button
+                    aria-label="Sumar cantidad"
+                    onClick={() => sumarCantidad(item)}
+                  >
+                    +
+                  </button>
                   <button
                     className="boton-eliminar"
                     onClick={() => eliminarProducto(item)}
@@ -180,7 +190,7 @@ export default function Carrito() {
                     Eliminar
                   </button>
                 </div>
-              </div>
+              </article>
             ))
           )}
 

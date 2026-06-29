@@ -42,7 +42,7 @@ export default function Productos() {
       </div>
 
       {loading ? (
-        <p>Cargando productos...</p>
+        <p className="productos-loading">Cargando productos...</p>
       ) : (
         <div className="lista-productos">
           {productos.map((producto) => (

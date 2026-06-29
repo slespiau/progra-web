@@ -3,15 +3,19 @@ import Link from "next/link";
 export default function Inicio() {
   return (
     <section id="inicio" className="hero">
-      <div className="hero-contenido">
-        <h2>Oliberta</h2>
-        <p className="hero-frase">
-          Velas artesanales que llenan tus espacios de calidez, aroma y armonía.
+      <div className="hero-contenido hero-contenido-centrado">
+        <h1>
+          Encendé la <span className="hero-destacado">calma.</span>
+        </h1>
+
+        <p className="hero-frase hero-frase-principal">
+          Aromas suaves. Diseño artesanal.
         </p>
-        <p>
-          Descubrí una colección de velas pensadas para decorar, regalar y crear
-          momentos de paz y bienestar.
+
+        <p className="hero-frase hero-frase-secundaria">
+          Luz para hacer de cada espacio un ritual.
         </p>
+
         <Link href="/productos" className="hero-boton">
           Ver productos
         </Link>

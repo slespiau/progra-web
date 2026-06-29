@@ -6,10 +6,14 @@ import { useRouter } from "next/navigation";
 
 export default function AgregarAlCarrito({ producto }) {
   const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleAgregar = async () => {
     setLoading(true);
+    setMensaje("");
+    setError("");
 
     try {
       const {
@@ -36,22 +40,32 @@ export default function AgregarAlCarrito({ producto }) {
       const result = await res.json();
 
       if (!res.ok || !result.success) {
-        alert(result.error || "Error al agregar al carrito");
+        setError(result.error || "Error al agregar al carrito");
         return;
       }
 
-      alert("Producto agregado al carrito");
+      setMensaje("Producto agregado al carrito");
     } catch (err) {
       console.error("Error inesperado:", err);
-      alert("Error al agregar al carrito");
+      setError("Error al agregar al carrito");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <button className="producto-boton" onClick={handleAgregar} disabled={loading}>
-      {loading ? "Agregando..." : "Agregar al carrito"}
-    </button>
+    <div className="agregar-carrito">
+      <button
+        type="button"
+        className="producto-boton"
+        onClick={handleAgregar}
+        disabled={loading}
+      >
+        {loading ? "Agregando..." : "Agregar al carrito"}
+      </button>
+
+      {mensaje && <p className="agregar-mensaje">{mensaje}</p>}
+      {error && <p className="agregar-error">{error}</p>}
+    </div>
   );
 }
