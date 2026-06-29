@@ -1,90 +1,98 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
-import { useRouter } from "next/navigation";
 
 export default function UserSession() {
-  const [user, setUser] = useState(null);
-  const [rol, setRol] = useState(null);
+  const [session, setSession] = useState(null);
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
   const router = useRouter();
+  const pathname = usePathname();
+  const menuRef = useRef(null);
 
   useEffect(() => {
-    async function loadSessionData() {
+    async function cargarSesion() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-      setUser(session?.user ?? null);
-
-      if (session?.access_token) {
-        try {
-          const res = await fetch("/api/auth/rol", {
-            headers: {
-              Authorization: `Bearer ${session.access_token}`,
-            },
-          });
-
-          const result = await res.json();
-          setRol(result.rol ?? null);
-        } catch (err) {
-          console.error("Error al obtener rol:", err);
-          setRol(null);
-        }
-      } else {
-        setRol(null);
-      }
+      setSession(session);
     }
 
-    loadSessionData();
+    cargarSesion();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setUser(session?.user ?? null);
-
-      if (session?.access_token) {
-        try {
-          const res = await fetch("/api/auth/rol", {
-            headers: {
-              Authorization: `Bearer ${session.access_token}`,
-            },
-          });
-
-          const result = await res.json();
-          setRol(result.rol ?? null);
-        } catch (err) {
-          console.error("Error al obtener rol:", err);
-          setRol(null);
-        }
-      } else {
-        setRol(null);
-      }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
     });
 
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuAbierto(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
-      subscription.unsubscribe();
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(null);
-    setRol(null);
-    router.push("/auth/login");
+    router.push("/");
+    router.refresh();
   };
 
-  if (!user) {
-    return null;
+  if (session) {
+    return (
+      <div className="user-session">
+        <Link
+          href="/ordenes"
+          className={`user-nav-link ${pathname === "/ordenes" ? "activo" : ""}`}
+        >
+          Órdenes
+        </Link>
+
+        <span className="user-email">{session.user.email}</span>
+
+        <button type="button" onClick={handleLogout}>
+          Cerrar sesión
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div className="user-session">
-      <div className="user-session-info">
-        <span>{user.email}</span>
-        {rol && <small>{rol}</small>}
-      </div>
-      <button onClick={handleLogout}>Cerrar sesión</button>
+    <div className="user-session" ref={menuRef}>
+      <button
+        type="button"
+        className="auth-menu-boton"
+        onClick={() => setMenuAbierto(!menuAbierto)}
+      >
+        Iniciar sesión
+        <span className="auth-menu-flecha">{menuAbierto ? "▴" : "▾"}</span>
+      </button>
+
+      {menuAbierto && (
+        <div className="auth-dropdown">
+          <Link href="/auth/login" onClick={() => setMenuAbierto(false)}>
+            Iniciar sesión
+          </Link>
+          <Link href="/auth/register" onClick={() => setMenuAbierto(false)}>
+            Crear cuenta
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

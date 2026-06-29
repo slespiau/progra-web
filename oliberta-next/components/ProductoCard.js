@@ -9,7 +9,11 @@ export default function ProductoCard({
 }) {
   return (
     <article className="producto-card">
-      <img src={imagen} alt={nombre} className="producto-imagen" />
+      <img
+        src={imagen}
+        alt={`Imagen del producto ${nombre}`}
+        className="producto-imagen"
+      />
 
       <h3>{nombre}</h3>
       <p className="producto-descripcion">{descripcion}</p>
