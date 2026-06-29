@@ -41,9 +41,9 @@ export default function Contacto() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nombre,
-          email,
-          mensaje,
+          nombre: nombre.trim(),
+          email: email.trim(),
+          mensaje: mensaje.trim(),
         }),
       });
 

@@ -123,6 +123,15 @@ export default function Ordenes() {
                   Total: <span>${Number(orden.total).toLocaleString("es-AR")}</span>
                 </p>
               </div>
+
+              {orden.estado === "pendiente" && (
+                <Link
+                  href={`/checkout?orden=${orden.id}`}
+                  className="boton-finalizar orden-pagar"
+                >
+                  Ir a pagar
+                </Link>
+              )}
             </article>
           ))}
         </div>

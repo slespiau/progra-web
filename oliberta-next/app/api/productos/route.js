@@ -1,6 +1,6 @@
 export async function GET() {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/productos?select=*`;
+      const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/productos?select=id,nombre,descripcion,precio,imagen_url,stock`;
       const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   
       const res = await fetch(url, {

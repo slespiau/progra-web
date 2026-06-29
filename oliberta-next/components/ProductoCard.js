@@ -1,4 +1,4 @@
-import AgregarAlCarrito from "../components/AgregarAlCarrito";
+import AgregarAlCarrito from "./AgregarAlCarrito";
 
 export default function ProductoCard({
   id,

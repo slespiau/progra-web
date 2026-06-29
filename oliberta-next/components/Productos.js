@@ -43,6 +43,10 @@ export default function Productos() {
 
       {loading ? (
         <p className="productos-loading">Cargando productos...</p>
+      ) : productos.length === 0 ? (
+        <p className="productos-loading">
+          No hay productos disponibles en este momento.
+        </p>
       ) : (
         <div className="lista-productos">
           {productos.map((producto) => (

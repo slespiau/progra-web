@@ -16,6 +16,11 @@ export default function AgregarAlCarrito({ producto }) {
     setError("");
 
     try {
+      if (!producto?.id) {
+        setError("Producto inválido");
+        return;
+      }
+
       const {
         data: { session },
       } = await supabase.auth.getSession();

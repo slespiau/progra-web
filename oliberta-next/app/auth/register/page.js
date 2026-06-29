@@ -21,29 +21,31 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
+      const emailLimpio = email.trim();
+      const nombreLimpio = nombre.trim();
+      const apellidoLimpio = apellido.trim();
+
       const { data, error } = await supabase.auth.signUp({
-        email,
+        email: emailLimpio,
         password,
       });
 
       if (error) {
         setError(error.message);
-        setLoading(false);
         return;
       }
 
       if (data.user) {
         const { error: profileError } = await supabase.from("usuarios").insert({
           id: data.user.id,
-          email,
-          nombre,
-          apellido,
+          email: emailLimpio,
+          nombre: nombreLimpio,
+          apellido: apellidoLimpio,
           rol: "cliente",
         });
 
         if (profileError) {
           setError(profileError.message);
-          setLoading(false);
           return;
         }
       }

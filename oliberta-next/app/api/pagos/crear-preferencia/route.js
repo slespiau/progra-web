@@ -99,6 +99,7 @@ export async function POST(request) {
         },
         auto_return: "approved",
         external_reference: String(orden.id),
+        notification_url: `${appUrl}/api/webhooks/mercado-pago`,
       },
     });
 

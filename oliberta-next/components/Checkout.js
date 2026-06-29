@@ -146,13 +146,16 @@ export default function Checkout() {
               <p>Vas a continuar el pago a través de Mercado Pago.</p>
             </div>
 
-            <button
-              className="boton-finalizar"
-              onClick={handlePrepararPago}
-              disabled={procesando}
-            >
-              {procesando ? "Preparando..." : "Pagar con Mercado Pago"}
-            </button>
+            <div className="checkout-boton">
+              <button
+                className="checkout-mp-boton"
+                onClick={handlePrepararPago}
+                disabled={procesando}
+              >
+                <span className="checkout-mp-logo">mercado pago</span>
+                <span>{procesando ? "Preparando pago..." : "Pagar con Mercado Pago"}</span>
+              </button>
+            </div>
 
             {preferencia && (
               <div className="checkout-preferencia">
