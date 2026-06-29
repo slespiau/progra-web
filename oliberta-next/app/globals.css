@@ -925,3 +925,15 @@ main {
     font-size: 34px;
   }
 }
+
+
+.auth-card a {
+  color: #c98c6b;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.auth-card a:hover {
+  color: #8b6b4a;
+}

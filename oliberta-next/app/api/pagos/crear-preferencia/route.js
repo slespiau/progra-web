@@ -2,10 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { client, Preference } from "../../../../lib/mercadopago";
 
 function errorResponse(error, status) {
-  return Response.json(
-    { success: false, error },
-    { status }
-  );
+  return Response.json({ success: false, error }, { status });
 }
 
 function createSupabaseFromToken(token) {
@@ -84,8 +81,7 @@ export async function POST(request) {
     }
 
     const preference = new Preference(client);
-    
-    console.log("APP URL:", process.env.NEXT_PUBLIC_APP_URL);
+
     const response = await preference.create({
       body: {
         items: items.map((item) => ({
@@ -96,9 +92,6 @@ export async function POST(request) {
           unit_price: Number(item.precio_unitario),
           currency_id: "ARS",
         })),
-        payer: {
-          email: user.email,
-        },
         back_urls: {
           success: `${appUrl}/pago-completado`,
           failure: `${appUrl}/pago-fallido`,
