@@ -101,7 +101,7 @@ export default function Checkout() {
 
       setPreferencia(result.data);
 
-      const pagoUrl = result.data.sandbox_init_point || result.data.init_point;
+      const pagoUrl = result.data.init_point || result.data.sandbox_init_point;
 
       if (pagoUrl) {
         window.location.href = pagoUrl;
@@ -143,7 +143,7 @@ export default function Checkout() {
 
             <div className="checkout-metodos">
               <h3>Método de pago</h3>
-              <p>Mercado Pago estará habilitado en el próximo paso del proyecto.</p>
+              <p>Vas a continuar el pago a través de Mercado Pago.</p>
             </div>
 
             <button
@@ -151,15 +151,14 @@ export default function Checkout() {
               onClick={handlePrepararPago}
               disabled={procesando}
             >
-              {procesando ? "Preparando..." : "Preparar pago"}
+              {procesando ? "Preparando..." : "Pagar con Mercado Pago"}
             </button>
 
             {preferencia && (
               <div className="checkout-preferencia">
                 <h3>Preferencia preparada</h3>
                 <p>Orden: #{preferencia.orden_id}</p>
-                <p>Email: {preferencia.payer_email}</p>
-                <p>Referencia externa: {preferencia.external_reference}</p>
+                <p>Referencia externa: {preferencia.orden_id}</p>
               </div>
             )}
 
