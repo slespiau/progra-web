@@ -176,10 +176,7 @@ export default function Checkout() {
                 <p>Referencia externa: {preferencia.orden_id}</p>
               </div>
             )}
-
-            <Link href="/ordenes" className="checkout-volver">
-              Volver a mis órdenes
-            </Link>
+            
           </article>
         )}
       </div>
