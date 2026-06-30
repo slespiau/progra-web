@@ -50,6 +50,7 @@ Simula una tienda online de velas artesanales, donde los usuarios pueden registr
 - Carrito compartido entre páginas
 - Registro e inicio de sesión
 - Historial de órdenes por usuario
+- Footer con navegación, ubicación y datos de contacto
 - Integración con Supabase para persistencia
 - Checkout con Mercado Pago Sandbox
 - Webhook para actualizar el estado del pago
