@@ -7,6 +7,7 @@ import { supabase } from "../lib/supabase";
 
 export default function UserSession() {
   const [session, setSession] = useState(null);
+  const [rol, setRol] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   const router = useRouter();
@@ -14,20 +15,56 @@ export default function UserSession() {
   const menuRef = useRef(null);
 
   useEffect(() => {
-    async function cargarSesion() {
+    async function cargarSesionYRol() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
       setSession(session);
+
+      if (!session) {
+        setRol(null);
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/auth/rol", {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+
+        const result = await res.json();
+        setRol(result.rol || null);
+      } catch (error) {
+        setRol(null);
+      }
     }
 
-    cargarSesion();
+    cargarSesionYRol();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
+
+      if (!session) {
+        setRol(null);
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/auth/rol", {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+
+        const result = await res.json();
+        setRol(result.rol || null);
+      } catch (error) {
+        setRol(null);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -49,6 +86,7 @@ export default function UserSession() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    setRol(null);
     router.push("/");
     router.refresh();
   };
@@ -62,6 +100,15 @@ export default function UserSession() {
         >
           Órdenes
         </Link>
+
+        {rol === "admin" && (
+          <Link
+            href="/admin/productos"
+            className={`user-nav-link ${pathname === "/admin/productos" ? "activo" : ""}`}
+          >
+            Admin
+          </Link>
+        )}
 
         <span className="user-email">{session.user.email}</span>
 
